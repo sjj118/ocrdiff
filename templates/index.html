@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OCRDiff</title>
+</head>
+<body>
+<form enctype="multipart/form-data" method="post" action="/api/ocrdiff/">
+    <label>选择OCR引擎</label><br>
+    <label><input type="radio" name="engine" value="baidu"checked>百度</label>
+    <label><input type="radio" name="engine" value="sogou">搜狗</label>
+    <label><input type="radio" name="engine" value="ali">阿里</label><br>
+    <label>图片1<input type="file" name="img1"/></label><br>
+    <label>图片2<input type="file" name="img2"/></label><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>

@@ -1,7 +1,8 @@
+import os
 import argparse
 import configparser
 from PIL import Image
-from ocrdiffer.ocrdiff import OCRDiffer
+from ocrdiffer.ocrdiffer import OCRDiffer
 from ocrdiffer.errors import *
 
 if __name__ == '__main__':
@@ -12,8 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('-a', '--accurate', action='store_true', help='enable accurate mode')
     args = parser.parse_args()
     config = configparser.ConfigParser()
-    config.read('config.ini')
-    differ = OCRDiffer(engine='ali', appcode=config['ali']['appcode'])
+    config.read(os.path.dirname(os.path.realpath(__file__)) + '/config.ini')
     if args.engine == 'baidu':
         differ = OCRDiffer(engine='baidu', token=config['baidu']['token'], accurate=args.accurate)
     elif args.engine == 'ali':
@@ -31,5 +31,4 @@ if __name__ == '__main__':
     except AliOCRError as e:
         print('阿里OCR错误[%d]: %s' % (e.code, e.message))
     else:
-        out.save('diff.png')
         out.show()

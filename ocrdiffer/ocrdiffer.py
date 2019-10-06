@@ -23,10 +23,9 @@ class OCRDiffer(object):
         img2.resize(img1.size)
         ocr1 = self.__engine.ocr(img1)
         ocr2 = self.__engine.ocr(img2)
-        # ocr1 = split_word(ocr1)
-        # ocr2 = split_word(ocr2)
+        ocr1 = split_word(ocr1)
+        ocr2 = split_word(ocr2)
         mat, unmat1, unmat2 = match_box(ocr1, ocr2)
-        print(mat)
         diff1, diff2 = diff_words(mat)
         out = highlight(img1, img2, ocr1, ocr2, diff1 + unmat1, diff2 + unmat2)
         return out
