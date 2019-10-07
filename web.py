@@ -39,7 +39,7 @@ def ocrdiff():
     out = differ.work(img1, img2)
     byte = BytesIO()
     out.save(byte, format='png')
-    return Response(byte.getvalue(), headers={'Content-Disposition': 'attachment;filename=out.png'})
+    return Response(byte.getvalue(), mimetype='image/png')
 
 
 if __name__ == '__main__':
