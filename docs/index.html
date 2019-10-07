@@ -20,7 +20,7 @@
     }
 </script>
 <body>
-<form enctype="multipart/form-data" onsubmit="return doSubmit(this)">
+<form enctype="multipart/form-data" method="post" action="http://47.97.216.157/api/ocrdiff">
     <label>选择OCR引擎</label><br>
     <label><input type="radio" name="engine" value="baidu" checked>百度</label>
     <label><input type="radio" name="engine" value="sogou">搜狗</label>
@@ -29,8 +29,5 @@
     <label>图片2<input type="file" name="img2"/></label><br>
     <input type="submit"/>
 </form>
-<img id="out" alt="">
-
-</img>
 </body>
 </html>
