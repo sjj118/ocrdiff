@@ -8,7 +8,7 @@
     function doSubmit(form) {
         var formData = new FormData(form);
         var request = new XMLHttpRequest();
-        request.open("POST", "http://47.97.216.157/api/ocrdiff", true);
+        request.open("POST", "http://47.97.216.157/api/ocrdiff/", true);
         request.responseType = "blob";
         request.send(formData);
         request.onreadystatechange = function () {
