@@ -10,6 +10,14 @@ config.read(os.path.dirname(os.path.realpath(__file__)) + '/config.ini')
 app = Flask(__name__)
 
 
+def after_request(resp):
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
+
+app.after_request(after_request)
+
+
 @app.route('/')
 def index():
     return render_template('index.html')

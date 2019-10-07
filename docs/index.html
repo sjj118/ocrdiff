@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OCRDiff</title>
+</head>
+<script>
+    function doSubmit(form) {
+        var formData = new FormData(form);
+        var request = new XMLHttpRequest();
+        request.open("POST", "http://47.97.216.157/api/ocrdiff", true);
+        request.responseType = "blob";
+        request.send(formData);
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                document.getElementById("out").src = URL.createObjectURL(request.response)
+            }
+        };
+        return false;
+    }
+</script>
+<body>
+<form enctype="multipart/form-data" onsubmit="return doSubmit(this)">
+    <label>选择OCR引擎</label><br>
+    <label><input type="radio" name="engine" value="baidu" checked>百度</label>
+    <label><input type="radio" name="engine" value="sogou">搜狗</label>
+    <label><input type="radio" name="engine" value="ali">阿里</label><br>
+    <label>图片1<input type="file" name="img1"/></label><br>
+    <label>图片2<input type="file" name="img2"/></label><br>
+    <input type="submit"/>
+</form>
+<img id="out" alt="">
+
+</img>
+</body>
+</html>
