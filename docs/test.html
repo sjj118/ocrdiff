@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-6 file">
+        <upload-image id="img1" title="拖入第一张图片"></upload-image>
+    </div>
+    <div class="col-md-6">
+        <upload-image id="img2" title="拖入第二张图片"></upload-image>
+    </div>
+</div>
+</body>
+<script>
+    Vue.component('upload-image', {
+        props: ['title'],
+        data: function () {
+            return {
+                img: null
+            }
+        },
+        template: `
+<label class="btn btn-block" style="min-height: 20rem; border: .25rem dashed #007bff;" width="100%" v-on:drop="onDrop" v-on:dragover="onDrag" v-on:dragenter="onDrag">
+    <input type="file" v-on:change="onChange" style="display: none;">
+    <h2 v-if="!img" class="text-center">{{ title }}</h2>
+    <img v-else v-bind:src="img" width="100%"></img>
+</label>
+`,
+        methods: {
+            saveImg: function (file) {
+                let reader = new FileReader();
+                let AllowImgFileSize = 4200000;
+                let imgUrlBase64;
+                imgUrlBase64 = reader.readAsDataURL(file);
+                reader.onerror = function () {
+                    alert('上传失败，请上传图片！');
+                };
+                reader.onload = e => {
+                    let result = reader.result;
+                    //let result = reader.result.substring(reader.result.indexOf(",") + 1);
+                    if (!reader.result.startsWith("data:image")) {
+                        alert('上传失败，请上传图片！');
+                    } else if (AllowImgFileSize !== 0 && AllowImgFileSize < result.length) {
+                        alert('上传失败，请上传不大于4M的图片！');
+                    } else {
+                        this.img = result;
+                    }
+                };
+            },
+            onDrag: function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            },
+            onDrop: function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                let files = e.dataTransfer.files;
+                if (files.length > 1) {
+                    alert('只能拖入一张图片！')
+                } else {
+                    this.saveImg(e.dataTransfer.files[0]);
+                }
+            },
+            onChange: function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                this.saveImg(e.target.files[0]);
+            },
+        },
+    });
+    img1 = new Vue({el: '#img1'});
+    img2 = new Vue({el: '#img2'});
+</script>
+</html>
